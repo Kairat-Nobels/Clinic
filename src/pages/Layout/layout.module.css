@@ -1,0 +1,87 @@
+.navbar {
+    display: flex;
+    padding-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar .logo {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.logo .logoImg {
+    width: 80px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.logoImg img {
+    width: 100%;
+}
+
+.navbar h1 {
+    width: 240px;
+    font-size: 21px;
+    line-height: 26px;
+    color: #4ca376;
+    text-align: left;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar ul li a {
+    color: #040404;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 22px;
+    transition: .3s;
+    display: inline-block;
+}
+
+.navbar ul a:hover {
+    color: #4ca376;
+    transform: scale(1.102);
+    font-weight: 600;
+}
+
+.navbar ul .active {
+    font-size: 20px;
+    font-weight: 600;
+    color: #4ca376;
+    position: relative;
+}
+
+.navbar ul .active::after {
+    position: absolute;
+    top: 30px;
+    content: '';
+    height: 3px;
+    border-radius: 5px;
+    left: 0;
+    width: 100%;
+    background: #4ca376;
+}
+
+.navbar ul .active:hover {
+    transform: none;
+}
+
+.info {
+    display: flex;
+    gap: 20px;
+}
