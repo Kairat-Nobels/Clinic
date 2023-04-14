@@ -49,6 +49,16 @@ export const createRecord = createAsyncThunk(
     }
 )
 
+export const deleteRecord = createAsyncThunk(
+    'deleteRecord',
+    async (mockupId) =>
+    {
+        const response = await axios.delete(`https://63d78ffe5c4274b136f6a651.mockapi.io/items/${mockupId}`);
+        console.log('response:', response, '\nresponse.data:', response.data);
+        return response.data;
+    }
+);
+
 const recordsSlice = createSlice({
     name: 'recordsSlice',
     initialState: {
@@ -87,6 +97,21 @@ const recordsSlice = createSlice({
         builder.addCase(createRecord.pending, (state, action) =>
         {
             state.loading = true;
+        })
+        builder.addCase(deleteRecord.pending, (state, action) =>
+        {
+            state.loading = true;
+        })
+        builder.addCase(deleteRecord.fulfilled, (state, action) =>
+        {
+            state.loading = false;
+            state.success = action.payload
+            // state.
+        })
+        builder.addCase(deleteRecord.rejected, (state, action) =>
+        {
+            state.loading = false;
+            state.error = action.payload
         })
     }
 })

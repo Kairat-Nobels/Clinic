@@ -12,40 +12,66 @@ const Modal = ({ setModal, data }) =>
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedService, setSelectedService] = useState('');
-
   const dispatch = useDispatch()
   const { error, loading, success, records } = useSelector(state => state.recordsReducer)
-  const fillterRecords = records.filter(r => r.type === 1 && r.service === selectedService)
+  let fillterRecords = records.filter(r => r.type === 1)
+  console.log(fillterRecords);
+  // if (data.name === "Кардиология") {
+  //   fillterRecords = records.filter(r =>
+  //   {
+  //     if (r.type === 1 && r.service === "Приём (осмотр, консультация)") return true
+  //     else if (r.type === 1 && r.service === "Приём детского врача-кардиолога") return true
+  //     else if (r.type === 1 && r.service === "ЭКГ с расшифровкой") return true
+  //     else return false
+  //   })
+  // }
+  // if (data.name === "Кардиология" || data.name === "Дерматология" || data.name === "Терапия") {
+  //   fillterRecords = records.filter(r => r.type === 1 && r.service === data.categories.map(c => c.name))
+  // }
+  // else {
+  // fillterRecords = records.filter(r => r.type === 1)
+  // }
   const today = new Date();
 
   const dates = [];
   for (let i = 0; i < 10; i++) {
     const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
-    const dateString = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+    const dateString = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })
     const dayOfWeek = new Intl.DateTimeFormat('ru-RU', { weekday: 'long' }).format(date);
     if (dayOfWeek !== 'воскресенье') {
       dates.push({ date: dateString, dayOfWeek });
     }
   }
 
-  const times = [];
+  const [times, setTimes] = useState([])
   const currentHour = today.getHours() + 1;
 
   const startHour = 9;
   const endHour = 18;
-  for (let hour = startHour; hour < endHour; hour++) {
-    const time = `${hour.toString().padStart(2, '0')}:00`;
-    times.push(time);
-  }
-  for (const time of times) {
-    for (const rTime of fillterRecords) {
-      if (rTime.time === time) {
-        let i = times.indexOf(time);
-        times.splice(i, 1);
-      }
+  const addTime = (data, data1) =>
+  {
+    let arr = []
+    for (let hour = startHour; hour < endHour; hour++) {
+      const time = `${hour.toString().padStart(2, '0')}:00`;
+      arr.push(time);
     }
+    setTimes(arr)
+    check(data, arr, data1)
   }
 
+  const check = (data, arr, data1) =>
+  {
+    const arr1 = arr;
+    for (const rTime of fillterRecords) {
+      for (const time of arr1) {
+        if (rTime.time === time && rTime.date == data && rTime.service == (data1 || selectedService)) {
+          let i = arr1.indexOf(time);
+          arr1.splice(i, 1);
+        }
+      }
+    }
+    setTimes(arr1);
+  }
   // ---
   const body = document.body;
   const handleSubmit = async (e) =>
@@ -66,12 +92,14 @@ const Modal = ({ setModal, data }) =>
     {
       !loading && setResult(false)
       setModal(false)
+      dispatch(getRecords())
     }, 4100);
   };
 
   useEffect(() =>
   {
     body.style.overflow = 'hidden';
+    addTime()
   }, [])
   const closeModal = (e) =>
   {
@@ -116,7 +144,13 @@ const Modal = ({ setModal, data }) =>
               </div>
               <div className='from-group'>
                 <label htmlFor="time">Услуга: </label>
-                <select id='service' required value={selectedService} onChange={(e) => setSelectedService(e.target.value)}>
+                <select id='service' required value={selectedService} onChange={(e) =>
+                {
+                  setSelectedService(e.target.value)
+                  addTime(selectedDate, e.target.value)
+                  setSelectedDate('')
+                  setSelectedTime('')
+                }}>
                   <option value=''>Выберите услугу</option>
                   {
                     data.categories.map(el => <option key={el.name} value={el.name}>{el.name}</option>)
@@ -128,7 +162,12 @@ const Modal = ({ setModal, data }) =>
                 <select
                   id="date"
                   value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
+                  onChange={(e) =>
+                  {
+                    setSelectedDate(e.target.value)
+                    addTime(e.target.value, selectedService)
+                    setSelectedTime('')
+                  }}
                   required
                 >
                   <option value="" disabled>Выберите дату</option>

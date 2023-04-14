@@ -37,20 +37,20 @@ const servicesSlice = createSlice({
                 name: 'Стоматология',
                 img: 'https://www.rudenta.ru/upload/sprint.editor/695/v4aq2zp96t2zbysxtmxu9hxzc0rzh0pa/edit_pic.jpg',
                 categories: [{ name: 'Лечение кариеса', price: 1200 }, { name: 'Удаление зуба', price: 1000 }, { name: 'Установка брекет системы', price: 12000 }],
-                doctors: [{ name: 'Рахманов Азамат', post: 'Стомотолог' }, { name: 'Умаров Алим', post: 'Стомотолог-Хирург' }]
+                doctors: [{ name: 'Рахманов Азамат', post: 'Стомотолог' }, { name: 'Темиркулова Үмүтай', post: 'Стомотолог' }, { name: 'Умаров Алим', post: 'Стомотолог-Хирург' }]
             },
             {
                 id: 6,
                 name: 'Дерматология',
                 img: 'https://vvclinic.com.ua/images/news/dermatologiya.jpg',
-                categories: [{ name: 'Консультация дерматокосметолога', price: 600 }, { name: 'Чистка лица (аппаратная и ручная)', price: 1200 }, { name: 'Пилинги', price: 1000 }, {name: 'Дермапен', price: 2000}],
+                categories: [{ name: 'Консультация дерматокосметолога', price: 600 }, { name: 'Чистка лица (аппаратная и ручная)', price: 1200 }, { name: 'Пилинги', price: 1000 }, { name: 'Дермапен', price: 2000 }],
                 doctors: [{ name: 'Ильязова Раяна', post: 'Дерматолог, Косметолог' }]
             },
         ]
     },
     reducers: {
         servicesInfo: (state, action) =>
-        { 
+        {
             state.services = action.payload;
         }
     }

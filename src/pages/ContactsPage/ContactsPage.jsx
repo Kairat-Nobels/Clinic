@@ -14,6 +14,7 @@ function ContactsPage()
 
   useEffect(() =>
   {
+    console.log('get new');
     dispatch(getRecords())
   }, [])
   return (

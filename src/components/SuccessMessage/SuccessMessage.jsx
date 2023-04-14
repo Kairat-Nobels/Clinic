@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from './SuccessMessage.module.css';
 import { getRecords } from '../../redux/slices/recordSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SuccessMessage = ({ message }) =>
 {
     const [showAnimation, setShowAnimation] = useState(true);
     const dispatch = useDispatch()
     // Обработчик события для анимации галочки
-
+    const { loading } = useSelector(state => state.recordsReducer)
     setTimeout(() =>
     {
         setShowAnimation(false);
@@ -16,9 +16,10 @@ const SuccessMessage = ({ message }) =>
 
     useEffect(() =>
     {
-        // if (message === 'Отзыв успешно добавлен') {
-        //     dispatch(getRecords())
-        // }
+        if (message === 'Вы успешно записались' && !loading) {
+            console.log('new');
+            // dispatch(getRecords())
+        }
     }, [])
 
     return (
