@@ -53,9 +53,22 @@ export const deleteRecord = createAsyncThunk(
     'deleteRecord',
     async (mockupId) =>
     {
-        const response = await axios.delete(`https://63d78ffe5c4274b136f6a651.mockapi.io/items/${mockupId}`);
-        console.log('response:', response, '\nresponse.data:', response.data);
-        return response.data;
+        try {
+            const response = await fetch(`https://63d78ffe5c4274b136f6a651.mockapi.io/items/${mockupId}`, {
+                method: 'DELETE'
+            });
+            console.log('response:', response);
+            if (response.ok) {
+                const data = await response.json();
+                console.log('response.data:', data);
+                return "Успешно удалено";
+            } else {
+                throw Error(`Error: ${response.status}`);
+            }
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+
     }
 );
 
@@ -98,6 +111,7 @@ const recordsSlice = createSlice({
         {
             state.loading = true;
         })
+        // delete
         builder.addCase(deleteRecord.pending, (state, action) =>
         {
             state.loading = true;
@@ -106,7 +120,6 @@ const recordsSlice = createSlice({
         {
             state.loading = false;
             state.success = action.payload
-            // state.
         })
         builder.addCase(deleteRecord.rejected, (state, action) =>
         {

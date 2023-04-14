@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const SuccessMessage = ({ message }) =>
 {
+    console.log(message);
     const [showAnimation, setShowAnimation] = useState(true);
     const dispatch = useDispatch()
     // Обработчик события для анимации галочки
@@ -18,7 +19,6 @@ const SuccessMessage = ({ message }) =>
     {
         if (message === 'Вы успешно записались' && !loading) {
             console.log('new');
-            // dispatch(getRecords())
         }
     }, [])
 

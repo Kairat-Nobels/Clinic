@@ -5,6 +5,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getRecords } from '../../redux/slices/recordSlice'
 import CameModal from '../../components/CameModal/CameModal'
+import { getService } from '../../redux/slices/servicesSlice'
 
 
 function Layout()
@@ -14,6 +15,7 @@ function Layout()
     useEffect(() =>
     {
         dispatch(getRecords())
+        dispatch(getService())
     }, [])
 
     return (

@@ -23,6 +23,7 @@ function DeleteModal({ setModal, id })
     const hadnleDelete = () =>
     {
         setResult(true)
+        console.log('loading: ', loading);
         dispatch(deleteRecord(id))
         document.body.style.overflow = '';
         setTimeout(() =>
@@ -30,12 +31,12 @@ function DeleteModal({ setModal, id })
             !loading && setResult(false)
             setModal(false)
             dispatch(getRecords())
-        }, 4100);
+        }, 1000);
     }
     return (
         <div onClick={closeModal} className={styles.window}>
             <section className={styles.form}>
-                <h2>Вы уверены что хотите удалить?</h2>
+                <h2>Удаление</h2>
                 {
                     result ?
                         (loading ? <p>Loading...</p> :
@@ -44,6 +45,7 @@ function DeleteModal({ setModal, id })
                         )
                         :
                         <div>
+                            <h2>Вы уверены что хотите удалить?</h2>
                             <button onClick={hadnleDelete}>Да</button>
                             <button onClick={() =>
                             {

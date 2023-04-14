@@ -16,21 +16,9 @@ const Modal = ({ setModal, data }) =>
   const { error, loading, success, records } = useSelector(state => state.recordsReducer)
   let fillterRecords = records.filter(r => r.type === 1)
   console.log(fillterRecords);
-  // if (data.name === "Кардиология") {
-  //   fillterRecords = records.filter(r =>
-  //   {
-  //     if (r.type === 1 && r.service === "Приём (осмотр, консультация)") return true
-  //     else if (r.type === 1 && r.service === "Приём детского врача-кардиолога") return true
-  //     else if (r.type === 1 && r.service === "ЭКГ с расшифровкой") return true
-  //     else return false
-  //   })
-  // }
-  // if (data.name === "Кардиология" || data.name === "Дерматология" || data.name === "Терапия") {
-  //   fillterRecords = records.filter(r => r.type === 1 && r.service === data.categories.map(c => c.name))
-  // }
-  // else {
-  // fillterRecords = records.filter(r => r.type === 1)
-  // }
+  let act = 0;
+  if (data.name === "Кардиология" || data.name === "Дерматология" || data.name === "Терапия") act = 1;
+
   const today = new Date();
 
   const dates = [];
@@ -64,9 +52,17 @@ const Modal = ({ setModal, data }) =>
     const arr1 = arr;
     for (const rTime of fillterRecords) {
       for (const time of arr1) {
-        if (rTime.time === time && rTime.date == data && rTime.service == (data1 || selectedService)) {
-          let i = arr1.indexOf(time);
-          arr1.splice(i, 1);
+        if (act === 0) {
+          if (rTime.time === time && rTime.date == data && rTime.service == (data1 || selectedService)) {
+            let i = arr1.indexOf(time);
+            arr1.splice(i, 1);
+          }
+        }
+        else if (act === 1) {
+          if (rTime.time === time && rTime.date == data) {
+            let i = arr1.indexOf(time);
+            arr1.splice(i, 1);
+          }
         }
       }
     }
