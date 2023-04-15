@@ -17,10 +17,12 @@ const Modal = ({ setModal, data }) =>
   let fillterRecords = records.filter(r => r.type === 1)
   console.log(fillterRecords);
   let act = 0;
-  if (data.name === "Кардиология" || data.name === "Дерматология" || data.name === "Терапия") act = 1;
+  if (data.name === "Кардиология") act = 1;
+  else if (data.name === "Дерматология") act = 2;
+  else if (data.name === "Терапия") act = 3;
 
+  // даты
   const today = new Date();
-
   const dates = [];
   for (let i = 0; i < 10; i++) {
     const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
@@ -60,8 +62,26 @@ const Modal = ({ setModal, data }) =>
         }
         else if (act === 1) {
           if (rTime.time === time && rTime.date == data) {
-            let i = arr1.indexOf(time);
-            arr1.splice(i, 1);
+            if (rTime.service === 'Приём (осмотр, консультация)' || rTime.service === 'Приём детского врача-кардиолога' || rTime.service === 'ЭКГ с расшифровкой') {
+              let i = arr1.indexOf(time);
+              arr1.splice(i, 1);
+            }
+          }
+        }
+        else if (act === 2) {
+          if (rTime.time === time && rTime.date == data) {
+            if (rTime.service === 'Консультация дерматокосметолог' || rTime.service === 'Чистка лица (аппаратная и ручная)' || rTime.service === 'Пилинги' || rTime.service === 'Дермапен') {
+              let i = arr1.indexOf(time);
+              arr1.splice(i, 1);
+            }
+          }
+        }
+        else if (act === 3) {
+          if (rTime.time === time && rTime.date == data) {
+            if (rTime.service === 'Консультация гепатолога' || rTime.service === 'Консультация терапевта') {
+              let i = arr1.indexOf(time);
+              arr1.splice(i, 1);
+            }
           }
         }
       }
@@ -84,7 +104,7 @@ const Modal = ({ setModal, data }) =>
       time: selectedTime
     }
     dispatch(createRecord(rec))
-    setTimeout(() =>
+    !loading && setTimeout(() =>
     {
       !loading && setResult(false)
       setModal(false)
