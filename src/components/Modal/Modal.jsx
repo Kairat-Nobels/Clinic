@@ -9,6 +9,7 @@ const Modal = ({ setModal, data }) =>
   const [result, setResult] = useState(false)
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedService, setSelectedService] = useState('');
@@ -21,8 +22,9 @@ const Modal = ({ setModal, data }) =>
   else if (data.name === "Дерматология") act = 2;
   else if (data.name === "Терапия") act = 3;
 
-  // даты
+  // даты 
   const today = new Date();
+  console.log('today: ' + today.getDate());
   const dates = [];
   for (let i = 0; i < 10; i++) {
     const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
@@ -90,11 +92,10 @@ const Modal = ({ setModal, data }) =>
   }
   // ---
   const body = document.body;
-  const handleSubmit = async (e) =>
+  const handleSubmit = (e) =>
   {
     e.preventDefault();
     setResult(true)
-    body.style.overflow = '';
     const rec = {
       type: 1,
       name: name,
@@ -104,18 +105,26 @@ const Modal = ({ setModal, data }) =>
       time: selectedTime
     }
     dispatch(createRecord(rec))
-    !loading && setTimeout(() =>
-    {
-      !loading && setResult(false)
-      setModal(false)
-      dispatch(getRecords())
-    }, 4100);
-  };
 
+  };
+  const handlePhoneNumberChange = (event) =>
+  {
+    let input = event.target.value;
+    input = input.replace(/\D/g, '');
+    if (!/^(2\d{2}|5\d{2}|7\d{2}|9\d{2})\d{6}$/.test(input)) {
+      setIsValid(false);
+      setPhone(input);
+      return;
+    }
+    input = input.replace(/^(\d{3})(\d{3})(\d{3})$/, '($1)-$2-$3');
+    setIsValid(/^\(\d{3}\)-\d{3}-\d{3}$/.test(input));
+    setPhone(input);
+  };
   useEffect(() =>
   {
     body.style.overflow = 'hidden';
     addTime()
+    dispatch(getRecords())
   }, [])
   const closeModal = (e) =>
   {
@@ -133,8 +142,18 @@ const Modal = ({ setModal, data }) =>
           result ?
             (loading ? <p>Идёт запись...</p>
               :
-              error ? <ErrorMessage message={error} />
-                : <SuccessMessage message={success} />
+              <div>
+                <button type='button' className={styles.closeBtn} onClick={() =>
+                {
+                  body.style.overflow = '';
+                  setModal(false)
+                  setResult(false)
+                }}>X</button>
+                {
+                  error ? <ErrorMessage message={error} />
+                    : <SuccessMessage message={success} />
+                }
+              </div>
             )
             :
             <>
@@ -152,11 +171,17 @@ const Modal = ({ setModal, data }) =>
                 <label htmlFor="phone">Телефон: </label>
                 <input
                   type="tel"
+                  placeholder="777222333"
                   id="phone"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={handlePhoneNumberChange}
                   required
                 />
+                {isValid ? (
+                  <p>Номер телефона введен правильно</p>
+                ) : (
+                  phone.length > 0 && <p>Номер телефона введен неправильно</p>
+                )}
               </div>
               <div className='from-group'>
                 <label htmlFor="time">Услуга: </label>
@@ -197,7 +222,7 @@ const Modal = ({ setModal, data }) =>
                 <select disabled={selectedDate.length > 0 ? false : true} id="time" value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} required>
                   <option value="" disabled>Выберите время</option>
                   {
-                    dates[0].date === selectedDate ?
+                    today.getDate().toString() === selectedDate.slice(0, 2) ?
                       times.filter(el =>
                         Number(el.slice(0, 2)) >= currentHour
                       ).map((time) => (
@@ -210,7 +235,7 @@ const Modal = ({ setModal, data }) =>
                   }
                 </select>
               </div>
-              <button type="submit">Записаться</button>
+              <button disabled={isValid ? false : true} type="submit">Записаться</button>
             </>
         }
       </form>

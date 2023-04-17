@@ -24,7 +24,7 @@
 }
 
 .animation svg.animate path {
-    animation: 3.3s ease forwards draw;
+    animation: draw 3.3s ease forwards;
     opacity: 1;
 }
 

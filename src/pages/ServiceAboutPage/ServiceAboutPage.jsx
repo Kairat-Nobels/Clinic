@@ -14,6 +14,7 @@ function ServiceAboutPage()
         <div>
             <button onClick={() => navigate(-1)}>назад</button>
             <h3>{location.state.name}</h3>
+            <p>{location.state.description}</p>
             <div>
                 <h4>Услуги клиники:</h4>
                 {

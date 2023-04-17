@@ -8,7 +8,7 @@ function DoctorsPage()
 
   const { doctors, loading, error } = useSelector(state => state.servicesReducer)
   return (
-    <div>
+    <div className={styles.page}>
       <h2>Наши Врачи:</h2>
       <div className={styles.doctors}>
         {

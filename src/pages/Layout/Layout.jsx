@@ -1,11 +1,12 @@
 import { useDispatch } from 'react-redux'
-import logo from '../../assets/logo.png'
 import styles from './layout.module.css'
 import { NavLink, Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getRecords } from '../../redux/slices/recordSlice'
 import CameModal from '../../components/CameModal/CameModal'
 import { getService } from '../../redux/slices/servicesSlice'
+import logo from '../../assets/logo.png'
+import tel from '../../assets/images/tel.png'
 
 
 function Layout()
@@ -34,10 +35,10 @@ function Layout()
                 </div>
                 <div className={styles.info}>
                     <div>
-                        <p>Время работы: <br />ПН-СБ: <span>с 9:00 до 18:00</span></p>
-                        <p>Тел: <a href='tel:+996500555555'>+996 500 555 555</a></p>
+                        <p className={styles.workTime}>Время работы: <span>ПН-СБ: с 9:00 до 18:00</span></p>
+                        <div className={styles.tel}><img className={styles.telIcon} src={tel} alt="" /><a href='tel:+996500555555'>+996 500 555 555</a></div>
                     </div>
-                    <div><button onClick={e => setModal(true)}>Админ</button></div>
+                    <div><button className={styles.adminBtn} onClick={e => setModal(true)}>Админ</button></div>
                 </div>
             </nav>
             {

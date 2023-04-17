@@ -1,0 +1,18 @@
+.swiper_container {
+    margin-top: 40px;
+    padding: 20px 50px 40px;
+}
+
+.slider-controler .slider-arrow::after {
+    font-weight: 900;
+}
+
+.slider {
+    margin-top: 80px;
+}
+
+.slider h2 {
+    text-align: center;
+    font-size: 32px;
+    line-height: 38px;
+}

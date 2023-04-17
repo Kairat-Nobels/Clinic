@@ -1,0 +1,46 @@
+.hello {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    height: calc(100vh - 100px);
+}
+
+.left {
+    width: 50%;
+}
+
+.right {
+    width: 60%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.right img {
+    width: 100%;
+}
+
+.hello h1 {
+    text-transform: uppercase;
+    font-size: 52px;
+    line-height: 76px;
+}
+
+.hello p {
+    margin-top: 30px;
+    font-size: 20px;
+    line-height: 26px;
+}
+
+.left a {
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 40px;
+    font-size: 24px;
+    color: #ffffff;
+    padding: 12px 20px;
+    background: #00A574;
+    border-radius: 10px;
+}

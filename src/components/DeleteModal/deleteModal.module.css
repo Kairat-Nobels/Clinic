@@ -20,6 +20,7 @@
     flex-direction: column;
     gap: 20px;
     align-items: center;
+    position: relative;
 }
 
 
@@ -31,4 +32,11 @@
     cursor: pointer;
     color: #fff;
     font-size: 20px;
+}
+
+.closeBtn {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    z-index: 2;
 }

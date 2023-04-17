@@ -57,10 +57,9 @@ export const deleteRecord = createAsyncThunk(
             const response = await fetch(`https://63d78ffe5c4274b136f6a651.mockapi.io/items/${mockupId}`, {
                 method: 'DELETE'
             });
-            console.log('response:', response);
-            if (response.ok) {
+            // console.log('response:', response);
+            if (response.status === 200) {
                 const data = await response.json();
-                console.log('response.data:', data);
                 return "Успешно удалено";
             } else {
                 throw Error(`Error: ${response.status}`);
@@ -77,6 +76,9 @@ const recordsSlice = createSlice({
     initialState: {
         records: [],
         loading: false,
+        delLoading: false,
+        delMessage: null,
+        delError: null,
         error: null,
         success: null
     },
@@ -114,17 +116,18 @@ const recordsSlice = createSlice({
         // delete
         builder.addCase(deleteRecord.pending, (state, action) =>
         {
-            state.loading = true;
+            state.delLoading = true;
         })
         builder.addCase(deleteRecord.fulfilled, (state, action) =>
         {
-            state.loading = false;
-            state.success = action.payload
+            state.delLoading = false;
+            state.delMessage = action.payload
         })
         builder.addCase(deleteRecord.rejected, (state, action) =>
         {
-            state.loading = false;
-            state.error = action.payload
+            if (action.payload === undefined) state.delError = 'Ошибка, что то пошло не так'
+            else state.delError = action.error
+            state.delLoading = false;
         })
     }
 })

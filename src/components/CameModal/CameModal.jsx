@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import styles from './cameModal.module.css'
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { cameAdmin } from "../../redux/slices/adminSlice";
 
 function CameModal({ setModal })
 {
     const [login, setLogin] = useState('');
+    const [valid, setValid] = useState(null);
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     useEffect(() =>
     {
         document.body.style.overflow = 'hidden';
@@ -23,9 +27,13 @@ function CameModal({ setModal })
         e.preventDefault();
         if (login === 'admin' && password === 'admin') {
             document.body.style.overflow = '';
-            console.log('Submit');
+            dispatch(cameAdmin())
             navigate('/admin')
             setModal(false)
+            setValid(null)
+        }
+        else {
+            setValid(true)
         }
     }
     return (
@@ -40,6 +48,9 @@ function CameModal({ setModal })
                     <label>Пароль: </label>
                     <input value={password} onChange={e => setPassword(e.target.value)} required type="password"></input>
                 </div>
+                {
+                    valid && <h3>Неправильный Логин или Пароль</h3>
+                }
                 <button type='submit'>Отправить</button>
             </form >
         </div >

@@ -8,7 +8,7 @@ function DeleteModal({ setModal, id })
 {
     const [result, setResult] = useState(false)
     const dispatch = useDispatch()
-    const { error, loading, success } = useSelector(state => state.recordsReducer)
+    const { delError, delLoading, delMessage } = useSelector(state => state.recordsReducer)
     useEffect(() =>
     {
         document.body.style.overflow = 'hidden';
@@ -23,15 +23,8 @@ function DeleteModal({ setModal, id })
     const hadnleDelete = () =>
     {
         setResult(true)
-        console.log('loading: ', loading);
         dispatch(deleteRecord(id))
-        document.body.style.overflow = '';
-        setTimeout(() =>
-        {
-            !loading && setResult(false)
-            setModal(false)
-            dispatch(getRecords())
-        }, 1000);
+
     }
     return (
         <div onClick={closeModal} className={styles.window}>
@@ -39,9 +32,21 @@ function DeleteModal({ setModal, id })
                 <h2>Удаление</h2>
                 {
                     result ?
-                        (loading ? <p>Loading...</p> :
-                            error ? <ErrorMessage message={error} /> :
-                                <SuccessMessage message={success} />
+                        (delLoading ? <p>Loading...</p> :
+                            <div>
+                                <button className={styles.closeBtn} onClick={() =>
+                                {
+                                    dispatch(getRecords())
+                                    document.body.style.overflow = ''
+                                    setModal(false)
+                                    setResult(false)
+                                }
+                                }>X</button>
+                                {
+                                    delError ? <ErrorMessage message={delError} /> :
+                                        <SuccessMessage message={delMessage} />
+                                }
+                            </div>
                         )
                         :
                         <div>

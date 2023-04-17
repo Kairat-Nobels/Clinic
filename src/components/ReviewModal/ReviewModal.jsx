@@ -9,7 +9,10 @@ function ReviewModal({ setModal })
 {
     const [result, setResult] = useState(false)
     const [name, setName] = useState('')
+    const [phone, setPhone] = useState('')
     const [comment, setComment] = useState('')
+    const [isValid, setIsValid] = useState(false);
+
 
     const dispatch = useDispatch()
     const { error, loading, success } = useSelector(state => state.recordsReducer)
@@ -24,6 +27,19 @@ function ReviewModal({ setModal })
             setModal(false)
         }
     }
+    const handlePhoneNumberChange = (event) =>
+    {
+        let input = event.target.value;
+        input = input.replace(/\D/g, '');
+        if (!/^(2\d{2}|5\d{2}|7\d{2}|9\d{2})\d{6}$/.test(input)) {
+            setIsValid(false);
+            setPhone(input);
+            return;
+        }
+        input = input.replace(/^(\d{3})(\d{3})(\d{3})$/, '($1)-$2-$3');
+        setIsValid(/^\(\d{3}\)-\d{3}-\d{3}$/.test(input));
+        setPhone(input);
+    };
     const handleSubmit = (e) =>
     {
         e.preventDefault();
@@ -31,16 +47,10 @@ function ReviewModal({ setModal })
         const rew = {
             type: 2,
             name: name,
+            phone: phone,
             comment: comment
         }
         dispatch(createRecord(rew))
-        document.body.style.overflow = '';
-        setTimeout(() =>
-        {
-            !loading && setResult(false)
-            setModal(false)
-            dispatch(getRecords())
-        }, 4100);
     }
     return (
         <div onClick={closeModal} className={styles.window}>
@@ -48,9 +58,21 @@ function ReviewModal({ setModal })
                 <h2>Оставьте отзыв</h2>
                 {
                     result ?
-                        (loading ? <p>Loading...</p> :
-                            error ? <ErrorMessage message={error} />
-                                : <SuccessMessage message={success} />
+                        (loading ? <p>Идёт запись...</p>
+                            :
+                            <div>
+                                <button type='button' className={styles.closeBtn} onClick={() =>
+                                {
+                                    dispatch(getRecords())
+                                    document.body.style.overflow = '';
+                                    setModal(false)
+                                    setResult(false)
+                                }}>X</button>
+                                {
+                                    error ? <ErrorMessage message={error} />
+                                        : <SuccessMessage message={success} />
+                                }
+                            </div>
                         )
                         :
                         <>
@@ -59,10 +81,26 @@ function ReviewModal({ setModal })
                                 <input value={name} onChange={e => setName(e.target.value)} required type="text" />
                             </div>
                             <div>
+                                <label htmlFor="phone">Телефон: </label>
+                                <input
+                                    type="tel"
+                                    placeholder="777222333"
+                                    id="phone"
+                                    value={phone}
+                                    onChange={handlePhoneNumberChange}
+                                    required
+                                />
+                                {isValid ? (
+                                    <p>Номер телефона введен правильно</p>
+                                ) : (
+                                    phone.length > 0 && <p>Номер телефона введен неправильно</p>
+                                )}
+                            </div>
+                            <div>
                                 <label>Отзыв: </label>
                                 <textarea value={comment} onChange={e => setComment(e.target.value)} required cols="20" rows="4"></textarea>
                             </div>
-                            <button type='submit'>Отправить</button>
+                            <button disabled={isValid ? false : true} type='submit'>Отправить</button>
                         </>
                 }
             </form >
