@@ -4,6 +4,7 @@ import SuccessMessage from '../SuccessMessage/SuccessMessage';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
 import { createRecord, getRecords } from '../../redux/slices/recordSlice';
+import SpinnerModal from '../SpinnerModal/SpinnerModal';
 const Modal = ({ setModal, data }) =>
 {
   const [result, setResult] = useState(false)
@@ -133,14 +134,22 @@ const Modal = ({ setModal, data }) =>
       setModal(false)
     }
   }
-
+  const handleClose = () =>
+  {
+    document.body.style.overflow = '';
+    setModal(false)
+  }
   return (
     <div onClick={closeModal} className={styles.window}>
       <form className={styles.card} onSubmit={handleSubmit}>
         <h2>Запись на приём</h2>
+        <div onClick={handleClose} className={styles.closeX}>X</div>
         {
           result ?
-            (loading ? <p>Идёт запись...</p>
+            (loading ? <div className={styles.loading}>
+              <SpinnerModal />
+              <p>Идёт запись...</p>
+            </div>
               :
               <div>
                 <button type='button' className={styles.closeBtn} onClick={() =>
@@ -177,12 +186,9 @@ const Modal = ({ setModal, data }) =>
                   onChange={handlePhoneNumberChange}
                   required
                 />
-                {isValid ? (
-                  <p>Номер телефона введен правильно</p>
-                ) : (
-                  phone.length > 0 && <p>Номер телефона введен неправильно</p>
-                )}
               </div>
+              {!isValid && phone.length > 0 && <p className='errorNum'>Номер телефона введен неправильно</p>
+              }
               <div className='from-group'>
                 <label htmlFor="time">Услуга: </label>
                 <select id='service' required value={selectedService} onChange={(e) =>

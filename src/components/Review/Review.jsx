@@ -6,11 +6,9 @@ function Review({ data })
         <div className={styles.review}>
             <div className={styles.head}>
                 <div className={styles.imageUser}><img src={image} alt="Smashicons" /></div>
-                <p> {data.name}</p>
+                <h3> {data.name}</h3>
             </div>
-            <p>Отзыв: <br />{data.comment}</p>
-            <p>---------------------------</p>
-            <br />
+            <p>{data.comment}</p>
         </div>
     )
 }

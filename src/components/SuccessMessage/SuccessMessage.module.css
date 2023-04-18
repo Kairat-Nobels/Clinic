@@ -42,13 +42,13 @@
     }
 
     60% {
-        fill: #3da35a;
+        fill: #00A574;
         opacity: 1;
         transform: translateY(0);
     }
 
     100% {
-        fill: #3da35a;
+        fill: #00A574;
         stroke-dashoffset: 0;
         opacity: 0;
         transform: translateY(-10px);
@@ -59,5 +59,5 @@
     text-align: center;
     font-weight: 700;
     font-size: 24px;
-    color: #297c23;
+    color: #00A574;
 }

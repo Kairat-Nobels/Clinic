@@ -133,5 +133,16 @@
 }
 
 .adminBtn {
-    background: #2382d5;
+    background: #175b90e9;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 700;
+    color: #fff;
+    transition: .34s;
+    border: none;
+    outline: none;
+}
+
+.adminBtn:hover {
+    transform: scale(1.14);
+    filter: brightness(120%);
 }

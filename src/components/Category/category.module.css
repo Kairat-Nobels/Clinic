@@ -1,0 +1,17 @@
+.category span {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    color: #050505;
+}
+
+.category {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.category p {
+    font-size: 18px;
+    line-height: 28px;
+}

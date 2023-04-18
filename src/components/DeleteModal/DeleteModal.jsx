@@ -4,6 +4,9 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import SuccessMessage from '../SuccessMessage/SuccessMessage';
 import { deleteRecord, getRecords } from '../../redux/slices/recordSlice';
 import styles from './deleteModal.module.css';
+import { RotatingLines } from 'react-loader-spinner'
+
+
 function DeleteModal({ setModal, id })
 {
     const [result, setResult] = useState(false)
@@ -32,7 +35,16 @@ function DeleteModal({ setModal, id })
                 <h2>Удаление</h2>
                 {
                     result ?
-                        (delLoading ? <p>Loading...</p> :
+                        (delLoading ? <div className={styles.loading}>
+                            <RotatingLines
+                                strokeColor="grey"
+                                strokeWidth="5"
+                                animationDuration="0.75"
+                                width="80"
+                                visible={true}
+                            />
+                            <p>Удаление...</p>
+                        </div> :
                             <div>
                                 <button className={styles.closeBtn} onClick={() =>
                                 {
@@ -49,14 +61,16 @@ function DeleteModal({ setModal, id })
                             </div>
                         )
                         :
-                        <div>
+                        <div className={styles.quiz}>
                             <h2>Вы уверены что хотите удалить?</h2>
-                            <button onClick={hadnleDelete}>Да</button>
-                            <button onClick={() =>
-                            {
-                                document.body.style.overflow = ''
-                                setModal(false)
-                            }}>Нет</button>
+                            <div className={styles.quizActions}>
+                                <button className={styles.quizActionsBtn} onClick={hadnleDelete}>Да</button>
+                                <button className={styles.quizActionsBtn} onClick={() =>
+                                {
+                                    document.body.style.overflow = ''
+                                    setModal(false)
+                                }}>Нет</button>
+                            </div>
                         </div>
                 }
             </section>

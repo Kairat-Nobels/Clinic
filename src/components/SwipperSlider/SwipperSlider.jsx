@@ -18,9 +18,7 @@ function SwipperSlider({ items })
             <Swiper
                 className="swiper_container"
                 effect={'cards'}
-                // effect={'coverflow'}
                 centeredSlidesBounds={true}
-                // grabCursor={true}
                 centeredSlides={false}
                 centerInsufficientSlides={true}
                 loop={true}

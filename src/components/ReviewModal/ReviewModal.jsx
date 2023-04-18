@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createRecord, getRecords } from '../../redux/slices/recordSlice';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import SuccessMessage from '../SuccessMessage/SuccessMessage';
+import SpinnerModal from '../SpinnerModal/SpinnerModal';
 
 function ReviewModal({ setModal })
 {
@@ -52,13 +53,22 @@ function ReviewModal({ setModal })
         }
         dispatch(createRecord(rew))
     }
+    const handleClose = () =>
+    {
+        document.body.style.overflow = '';
+        setModal(false)
+    }
+
     return (
         <div onClick={closeModal} className={styles.window}>
             <form onSubmit={handleSubmit} className={styles.form} action="">
                 <h2>Оставьте отзыв</h2>
+                <div onClick={handleClose} className={styles.closeX}>X</div>
                 {
                     result ?
-                        (loading ? <p>Идёт запись...</p>
+                        (loading ? <div className={styles.loading}>
+                            <SpinnerModal />
+                            <p>Отзыв отправляется...</p></div>
                             :
                             <div>
                                 <button type='button' className={styles.closeBtn} onClick={() =>
@@ -90,15 +100,12 @@ function ReviewModal({ setModal })
                                     onChange={handlePhoneNumberChange}
                                     required
                                 />
-                                {isValid ? (
-                                    <p>Номер телефона введен правильно</p>
-                                ) : (
-                                    phone.length > 0 && <p>Номер телефона введен неправильно</p>
-                                )}
                             </div>
+                            {!isValid && phone.length > 0 && <p className='errorNum'>Номер телефона введен неправильно</p>
+                            }
                             <div>
                                 <label>Отзыв: </label>
-                                <textarea value={comment} onChange={e => setComment(e.target.value)} required cols="20" rows="4"></textarea>
+                                <textarea maxLength={320} value={comment} onChange={e => setComment(e.target.value)} required cols="20" rows="4"></textarea>
                             </div>
                             <button disabled={isValid ? false : true} type='submit'>Отправить</button>
                         </>

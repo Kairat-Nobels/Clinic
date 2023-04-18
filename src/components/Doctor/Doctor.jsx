@@ -1,8 +1,9 @@
+import styles from './doctor.module.css'
 
-
-function Doctor({obj}) {
+function Doctor({ obj })
+{
     return (
-        <div>
+        <div className={styles.div}>
             <p>{obj.name}</p>
             <p>{obj.post}</p>
         </div>

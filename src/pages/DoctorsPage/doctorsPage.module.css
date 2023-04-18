@@ -2,16 +2,16 @@
     display: flex;
     justify-content: space-between;
     align-items: flex;
-    gap: 20px 30px;
+    gap: 35px 20px;
     width: 90%;
-    margin: 40px auto 0;
+    margin: 25px auto 0;
     flex-wrap: wrap;
     padding-bottom: 40px;
 }
 
 .page h2 {
-    font-size: 38px;
-    line-height: 46px;
+    margin-top: 40px;
+    font-size: 32px;
+    line-height: 38px;
     text-align: center;
-    margin-top: 60px;
 }

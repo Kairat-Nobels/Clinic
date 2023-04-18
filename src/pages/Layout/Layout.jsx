@@ -28,9 +28,10 @@ function Layout()
                         <h1>Лечебно Оздоровительный Центр</h1>
                     </NavLink>
                     <ul>
+                        <li><NavLink to='/' className={({ isActive }) => (isActive ? styles.active : '')}>Главная</NavLink></li>
                         <li><NavLink to='/services' className={({ isActive }) => (isActive ? styles.active : '')}>Услуги</NavLink></li>
                         <li><NavLink to='/doctors' className={({ isActive }) => (isActive ? styles.active : '')}>Врачи</NavLink></li>
-                        <li><NavLink to='/contacts' className={({ isActive }) => (isActive ? styles.active : '')}>Контакты</NavLink></li>
+                        {/* <li><NavLink to='/contacts' className={({ isActive }) => (isActive ? styles.active : '')}>Контакты</NavLink></li> */}
                     </ul>
                 </div>
                 <div className={styles.info}>

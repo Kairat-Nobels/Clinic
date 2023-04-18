@@ -22,6 +22,11 @@ function CameModal({ setModal })
             setModal(false)
         }
     }
+    const handleClose = () =>
+    {
+        document.body.style.overflow = '';
+        setModal(false)
+    }
     const handleSubmit = (e) =>
     {
         e.preventDefault();
@@ -48,6 +53,7 @@ function CameModal({ setModal })
                     <label>Пароль: </label>
                     <input value={password} onChange={e => setPassword(e.target.value)} required type="password"></input>
                 </div>
+                <div onClick={handleClose} className={styles.closeX}>X</div>
                 {
                     valid && <h3>Неправильный Логин или Пароль</h3>
                 }

@@ -4,6 +4,7 @@ import Record from '../../components/Record/Record';
 import { getRecords } from '../../redux/slices/recordSlice';
 import ReviewModal from '../../components/ReviewModal/ReviewModal';
 import Review from '../../components/Review/Review';
+import Footer from '../../components/Footer/Footer';
 
 function ContactsPage()
 {
@@ -16,6 +17,7 @@ function ContactsPage()
   {
     console.log('get new');
     dispatch(getRecords())
+    window.scrollTo(0, 0)
   }, [])
   return (
     <div>
@@ -32,6 +34,7 @@ function ContactsPage()
       {
         modal && <ReviewModal setModal={setModal} />
       }
+      <Footer />
     </div>
   )
 }

@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import Record from '../../components/Record/Record';
 import { getRecords } from '../../redux/slices/recordSlice';
 import { useNavigate } from 'react-router-dom';
-import Review from '../../components/Review/Review';
 import { outAdmin } from '../../redux/slices/adminSlice';
 import ReviewAdmin from '../../components/ReviewAdmin/ReviewAdmin';
+import styles from './adminPage.module.css'
+import { RotatingLines } from 'react-loader-spinner'
 
 function AdminPage()
 {
@@ -22,8 +23,9 @@ function AdminPage()
         const [day, month] = record.date.split(' ');
         const monthNum = getMonthNumber(month);
         const year = today.getFullYear();
-        const recordDate = new Date(year, monthNum, day);
-        return recordDate > today;
+        const hour = record.time.slice(0, 2)
+        const recordDate = new Date(year, monthNum, day, hour);
+        return recordDate >= today;
     });
     const review = records.filter(record => record.type === 2)
     const allRecords = records.filter(record => record.type === 1)
@@ -36,6 +38,7 @@ function AdminPage()
     const data = [filteredRecords, allRecords, review]
     useEffect(() =>
     {
+        window.scrollTo(0, 0)
         dispatch(getRecords())
     }, [])
 
@@ -102,34 +105,62 @@ function AdminPage()
         }
     });
     if (valid) return (
-        <div>
-            <h2> Администратор</h2 >
-            <button onClick={() =>
-            {
-                dispatch(outAdmin())
-                navigate('/')
-            }}>Выйти</button>
-
-            <div>
-                <button onClick={() => { setChoice(0) }}>Актуальные Записи</button>
-                <button onClick={() => { setChoice(1) }}>Все записи</button>
-                <button onClick={() => { setChoice(2) }}>Отзывы</button>
+        <div className='admin container'>
+            <div className={styles.head}>
+                <button onClick={() =>
+                {
+                    dispatch(outAdmin())
+                    navigate('/')
+                }}>Выйти</button>
+                <h2> Администратор</h2 >
+            </div>
+            <div className={styles.sort}>
+                <button className={choice === 0 ? styles.active : ''} onClick={() => { setChoice(0) }}>Актуальные Записи</button>
+                <button className={choice === 1 ? styles.active : ''} onClick={() => { setChoice(1) }}>Все записи</button>
+                <button className={choice === 2 ? styles.active : ''} onClick={() => { setChoice(2) }}>Отзывы</button>
             </div>
             {
-                loading ? <p>loading...</p>
+                loading ? <div className={styles.loading}>
+                    <RotatingLines
+                        strokeColor="grey"
+                        strokeWidth="5"
+                        animationDuration="0.75"
+                        width="80"
+                        visible={true}
+                    />
+                    <p>Загрузка...</p>
+                </div>
                     :
                     error ? <h3>{error}</h3>
                         :
-                        choice === 2 ? data[choice].map(r => <ReviewAdmin key={r.id} data={r} />)
+                        choice === 2 ?
+                            <div className={styles.reviewTable}>
+                                <div className={styles.headTable}>
+                                    <p>Имя</p>
+                                    <p>Телефон</p>
+                                    <p>Отзыв</p>
+                                </div>
+                                {data[choice].map(r => <ReviewAdmin key={r.id} data={r} />)
+                                }
+                            </div>
                             :
-                            data[choice].map(r => <Record key={r.id} data={r} />)
+                            <div className={styles.recordTable}>
+                                <div className={styles.headT}>
+                                    <p>Имя</p>
+                                    <p>Телефон</p>
+                                    <p>Услуга</p>
+                                    <p>День</p>
+                                    <p>Время</p>
+                                </div>
+                                {data[choice].map(r => <Record key={r.id} data={r} />)}
+                            </div>
 
             }
         </div >
 
     )
     else return (
-        <div>
+        <div className={styles.notWelcome}>
             <h2>Вы должны войти как администратор</h2>
             <button onClick={() => navigate('/')}>Выйти</button>
         </div>

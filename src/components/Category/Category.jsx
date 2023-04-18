@@ -1,9 +1,11 @@
+import styles from './category.module.css'
 
-
-function Category({obj}) {
+function Category({ obj })
+{
     return (
-        <div>
-            <p>{obj.name}  Цена: <span>{obj.price} сом</span></p>
+        <div className={styles.category}>
+            <p><span>{obj.name}</span></p>
+            <p>цена: <span>{obj.price} сом</span></p>
         </div>
     )
 }

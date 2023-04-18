@@ -1,21 +1,19 @@
 import { useState } from "react"
 import DeleteModal from "../DeleteModal/DeleteModal"
-
+import styles from './record.module.css'
 
 function Record({ data })
 {
     const [modal, setModal] = useState(false)
 
     return (
-        <div>
-            <p>name: {data.name}</p>
-            <p>phone: {data.phone}</p>
-            <p>Услуга: {data.service}</p>
-            <p>День: {data.date}</p>
-            <p>Время: {data.time}</p>
-            <button onClick={e => setModal(true)}>Delete</button>
-            <p>.......................</p>
-            <br />
+        <div className={styles.record}>
+            <p>{data.name}</p>
+            <p>{data.phone}</p>
+            <p>{data.service}</p>
+            <p>{data.date}</p>
+            <p>{data.time}</p>
+            <div><button onClick={e => setModal(true)}>Удалить</button></div>
             {
                 modal && <DeleteModal setModal={setModal} id={data.id} />
             }
