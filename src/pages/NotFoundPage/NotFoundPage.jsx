@@ -1,8 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-function NotFoundPage() {
+function NotFoundPage()
+{
   return (
-    <div>NotFoundPage</div>
+    <div><h2 style={{ marginTop: "50px", textAlign: "center" }}>Страница не найдена</h2>
+      <Link to={'/'} className='notFountBtn'>Вернуться в главную</Link>
+    </div>
+
   )
 }
 

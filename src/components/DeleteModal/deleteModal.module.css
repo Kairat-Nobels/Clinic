@@ -12,7 +12,8 @@
 
 
 .form {
-    width: 400px;
+    max-width: 400px;
+    min-width: 300px;
     background-color: #f2f2f2;
     border-radius: 20px;
     padding: 40px 20px 30px;
@@ -42,13 +43,15 @@
     background: #175b90;
 }
 
-.loading {
+.form .loading {
+    display: block;
     margin: 20px auto;
     text-align: center;
     width: 90%;
 }
 
-.quiz {
+.form .quiz {
+    display: block;
     text-align: center;
 }
 
@@ -68,4 +71,10 @@
 .quizActions .quizActionsBtn {
     background: #175b90e9;
     padding: 10px 24px;
+}
+
+.form .loading .p {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
 }

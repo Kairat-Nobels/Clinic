@@ -31,3 +31,16 @@
 .imageUser img {
     width: 100%;
 }
+
+@media (max-width: 420px) {
+    .review {
+        padding: 15px 10px 15px 20px;
+    }
+
+    .review p {
+        margin-top: 20px;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+    }
+}

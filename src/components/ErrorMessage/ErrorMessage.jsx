@@ -1,11 +1,11 @@
-import React from 'react'
+import styles from './errorMessage.module.css'
 
 function ErrorMessage({ message })
 {
     return (
-        <div>
-            <h2>Проблемка</h2>
-            <p>{message}</p>
+        <div className={styles.messageError}>
+            <h2>Проблемка 😕 <span>{message}</span></h2>
+            <p>Проверьте Интернет и Обновите страницу</p>
         </div>
     )
 }

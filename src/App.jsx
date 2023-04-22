@@ -4,7 +4,6 @@ import Layout from './pages/Layout/Layout'
 import HomePage from './pages/HomePage/HomePage'
 import ServicePage from './pages/ServicePage/ServicePage'
 import DoctorsPage from './pages/DoctorsPage/DoctorsPage'
-import ContactsPage from './pages/ContactsPage/ContactsPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 import ServiceAboutPage from './pages/ServiceAboutPage/ServiceAboutPage'
 import AdminPage from './pages/AdminPage/AdminPage'
@@ -20,7 +19,6 @@ function App()
                         <Route index element={<HomePage />} />
                         <Route path={'/services'} element={<ServicePage />} />
                         <Route path={'/doctors'} element={<DoctorsPage />} />
-                        <Route path={'/contacts'} element={<ContactsPage />} />
                         <Route path={'/services/:id'} element={<ServiceAboutPage />} />
                         <Route path={'*'} element={<NotFoundPage />} />
                     </Route>

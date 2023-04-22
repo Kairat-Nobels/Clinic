@@ -33,6 +33,7 @@ function DeleteModal({ setModal, id })
         <div onClick={closeModal} className={styles.window}>
             <section className={styles.form}>
                 <h2>Удаление</h2>
+
                 {
                     result ?
                         (delLoading ? <div className={styles.loading}>
@@ -43,7 +44,7 @@ function DeleteModal({ setModal, id })
                                 width="80"
                                 visible={true}
                             />
-                            <p>Удаление...</p>
+                            <span className={styles.p}>Удаление...</span>
                         </div> :
                             <div>
                                 <button className={styles.closeBtn} onClick={() =>

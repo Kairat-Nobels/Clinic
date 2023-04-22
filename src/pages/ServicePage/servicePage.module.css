@@ -19,3 +19,18 @@
     align-items: center;
 
 }
+
+@media (max-width: 1110px) {
+    .page .service {
+        justify-content: space-around;
+    }
+}
+
+@media (max-width: 470px) {
+    .page h2 {
+        margin-top: 40px;
+        font-size: 26px;
+        line-height: 32px;
+        text-align: center;
+    }
+}

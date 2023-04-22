@@ -17,7 +17,6 @@ const Modal = ({ setModal, data }) =>
   const dispatch = useDispatch()
   const { error, loading, success, records } = useSelector(state => state.recordsReducer)
   let fillterRecords = records.filter(r => r.type === 1)
-  console.log(fillterRecords);
   let act = 0;
   if (data.name === "Кардиология") act = 1;
   else if (data.name === "Дерматология") act = 2;
@@ -25,7 +24,6 @@ const Modal = ({ setModal, data }) =>
 
   // даты 
   const today = new Date();
-  console.log('today: ' + today.getDate());
   const dates = [];
   for (let i = 0; i < 10; i++) {
     const date = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));

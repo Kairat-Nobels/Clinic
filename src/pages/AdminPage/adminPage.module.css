@@ -48,6 +48,7 @@
     line-height: 22px;
     transition: .37s;
     display: inline-block;
+    white-space: nowrap;
 }
 
 .sort button:hover {
@@ -163,4 +164,47 @@
     margin-top: 20px;
     font-size: 18px;
     font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .sort {
+        width: 90%;
+    }
+
+    .tableContainer {
+        overflow: scroll;
+    }
+
+    .reviewTable,
+    .recordTable {
+        min-width: 900px;
+    }
+
+    .head {
+        width: 100%;
+    }
+
+    .head h2 {
+        width: 60%;
+        text-align: left;
+    }
+}
+
+@media (max-width: 570px) {
+    .sort {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .head {
+        flex-direction: column;
+        gap: 25px;
+        align-items: start;
+    }
+
+    .head h2 {
+        text-align: center;
+        width: 100%;
+    }
 }

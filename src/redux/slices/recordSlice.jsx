@@ -57,7 +57,6 @@ export const deleteRecord = createAsyncThunk(
             const response = await fetch(`https://63d78ffe5c4274b136f6a651.mockapi.io/items/${mockupId}`, {
                 method: 'DELETE'
             });
-            // console.log('response:', response);
             if (response.status === 200) {
                 const data = await response.json();
                 return "Успешно удалено";

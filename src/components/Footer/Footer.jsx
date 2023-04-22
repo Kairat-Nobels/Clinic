@@ -28,6 +28,14 @@ function Footer()
                     <NavLink className={styles.linkBtn} to={'/services'}>Записаться</NavLink>
                 </div>
             </nav>
+            <div className={styles.mobileFooter}>
+                <ul>
+                    <li><a target='_blank' href="https://www.facebook.com/"><div><img src={faceBookicon} alt="img" /></div></a></li>
+                    <li><a target='_blank' href="https://www.instagram.com/"><div><img src={insta} alt="img" /></div></a></li>
+                    <li><a target='_blank' href="https://api.whatsapp.com/"><div><img src={whats} alt="img" /></div></a></li>
+                </ul>
+                <NavLink className={styles.linkBtn} to={'/services'}>Записаться</NavLink>
+            </div>
         </>
     )
 }

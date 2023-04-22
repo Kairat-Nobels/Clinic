@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     gap: 80px;
+    min-height: 550px;
     height: calc(100vh - 100px);
 }
 
@@ -222,7 +223,6 @@
 }
 
 .sendMes form div {
-    /* background: red; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -274,4 +274,189 @@
 .formMes button:hover {
     transform: scale(1.1);
     filter: brightness(110%);
+}
+
+.rightH1 {
+    display: none;
+}
+
+.moreBtn {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+@media (max-width: 1177px) {
+    .hello h1 {
+        font-size: 48px;
+        line-height: 72px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .hello h1 {
+        font-size: 44px;
+        line-height: 66px;
+    }
+
+    .hello p {
+        margin-top: 20px;
+        font-size: 18px;
+        line-height: 30px;
+    }
+
+    .hello p span {
+        font-size: 20px;
+        font-weight: 600;
+        color: #00A574;
+    }
+}
+
+@media (max-width: 1100px) {
+    .right {
+        width: 40%;
+    }
+
+}
+
+@media (max-width: 1000px) {
+    .feedBack {
+        margin-top: 80px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column-reverse;
+        gap: 20px;
+    }
+
+    .sendMes {
+        width: auto;
+    }
+
+    .sendMes form {
+        width: 100%;
+    }
+
+    .maps {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 900px) {
+    .doctors .cardsDoc {
+        flex-direction: column;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 830px) {
+    .right {
+        display: none;
+    }
+
+    .left {
+        width: 90%;
+    }
+
+    .left>div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .left>div h1 {
+        width: 60%;
+        font-size: 36px;
+    }
+
+    .rightH1 {
+        display: block;
+        width: 50%;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .rightH1 img {
+        width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    .left {
+        width: 100%;
+    }
+
+    .reviewsModal {
+        gap: 60px;
+    }
+}
+
+@media (max-width: 630px) {
+    .rightH1 {
+        width: 40%;
+    }
+
+    .aboutP {
+        display: none;
+    }
+
+
+}
+
+@media (max-width: 577px) {
+    .rightH1 {
+        display: none;
+    }
+
+    .left>div h1 {
+        width: 100%;
+    }
+
+    .reviewsModal {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 475px) {
+    .doctors h2 {
+        font-size: 26px;
+        line-height: 32px;
+        text-align: center;
+    }
+
+    .about h2 {
+        font-size: 26px;
+        line-height: 32px;
+        text-align: center;
+    }
+
+    .sendMes h2 {
+        font-size: 26px;
+        line-height: 32px;
+        text-align: center;
+    }
+
+    .sendMes form .message {
+        width: 300px;
+    }
+
+    .reviewsModal {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 400px) {
+    .hello {
+        margin-top: 30px;
+        max-height: 700px;
+    }
+
+
+}
+
+@media (max-width: 362px) {
+    .left div h1 {
+        font-size: 34px;
+    }
 }

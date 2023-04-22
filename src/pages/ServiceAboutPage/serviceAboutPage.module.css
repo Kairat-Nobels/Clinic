@@ -91,3 +91,65 @@
     transform: scale(1.14);
     filter: brightness(120%);
 }
+
+@media (max-width: 777px) {
+    .aboutHead p {
+        margin: 0;
+        width: 100%;
+    }
+
+    .about .image {
+        display: none;
+    }
+}
+
+@media (max-width: 610px) {
+    .flex {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .flex h4 {
+        text-align: center;
+    }
+
+    .flex .service {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 470px) {
+    .page h2 {
+        margin-top: 40px;
+        font-size: 26px;
+        line-height: 32px;
+        text-align: center;
+    }
+
+    .about h3 {
+        margin-top: 20px;
+
+        font-size: 26px;
+        line-height: 32px;
+    }
+
+    .actions {
+        margin-top: 40px;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .page {
+        padding-bottom: 100px;
+    }
+}
+
+@media (max-width: 420px) {
+    .aboutHead p {
+        font-size: 16px;
+        line-height: 28px;
+    }
+}

@@ -8,7 +8,6 @@ export const getService = createAsyncThunk(
             const response = await fetch("https://63d78ffe5c4274b136f6a651.mockapi.io/service");
             if (response.status === 200) {
                 const service = await response.json();
-                console.log(service);
                 return service;
             }
             else {

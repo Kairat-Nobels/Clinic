@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
@@ -12,6 +12,16 @@ import 'swiper/css/effect-cards';
 
 function SwipperSlider({ items })
 {
+    const [wid, setWid] = useState()
+    useEffect(() =>
+    {
+        window.addEventListener("resize", () =>
+        {
+            // const windowInnerWidth = window.innerWidth;
+            if (window.innerWidth <= 900) setWid(1)
+            else if (window.innerWidth >= 900 && window.innerWidth <= 1400) setWid(2)
+        })
+    }, [])
     return (
         <div className='slider'>
             <h2>Отзывы</h2>
@@ -36,10 +46,8 @@ function SwipperSlider({ items })
                 }}
                 modules={[EffectCoverflow, Pagination, Navigation]}
                 spaceBetween={60}
-                slidesPerView={2}
+                slidesPerView={wid}
                 scrollbar={{ draggable: true }}
-                onSwiper={(swiper) => console.log(swiper)}
-                onSlideChange={() => console.log('slide change')}
             >
                 {
                     items.map(item => (

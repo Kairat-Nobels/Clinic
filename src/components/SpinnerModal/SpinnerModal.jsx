@@ -4,7 +4,7 @@ import styles from './spinner.module.css'
 function SpinnerModal()
 {
     return (
-        <div className={styles.loading}>
+        <section className={styles.loading}>
             <Watch
                 height="60"
                 width="60"
@@ -15,7 +15,7 @@ function SpinnerModal()
                 wrapperClassName=""
                 visible={true}
             />
-        </div>
+        </section>
     )
 }
 

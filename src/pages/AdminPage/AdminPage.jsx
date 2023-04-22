@@ -14,7 +14,6 @@ function AdminPage()
     const dispatch = useDispatch()
     const { records, error, loading } = useSelector(state => state.recordsReducer)
     const { valid } = useSelector(state => state.adminReducer)
-    console.log('records ', records);
     const navigate = useNavigate()
     const today = new Date()
     const filteredRecords = records.filter(record =>
@@ -119,43 +118,45 @@ function AdminPage()
                 <button className={choice === 1 ? styles.active : ''} onClick={() => { setChoice(1) }}>Все записи</button>
                 <button className={choice === 2 ? styles.active : ''} onClick={() => { setChoice(2) }}>Отзывы</button>
             </div>
-            {
-                loading ? <div className={styles.loading}>
-                    <RotatingLines
-                        strokeColor="grey"
-                        strokeWidth="5"
-                        animationDuration="0.75"
-                        width="80"
-                        visible={true}
-                    />
-                    <p>Загрузка...</p>
-                </div>
-                    :
-                    error ? <h3>{error}</h3>
+            <div className={styles.tableContainer}>
+                {
+                    loading ? <div className={styles.loading}>
+                        <RotatingLines
+                            strokeColor="grey"
+                            strokeWidth="5"
+                            animationDuration="0.75"
+                            width="80"
+                            visible={true}
+                        />
+                        <p>Загрузка...</p>
+                    </div>
                         :
-                        choice === 2 ?
-                            <div className={styles.reviewTable}>
-                                <div className={styles.headTable}>
-                                    <p>Имя</p>
-                                    <p>Телефон</p>
-                                    <p>Отзыв</p>
-                                </div>
-                                {data[choice].map(r => <ReviewAdmin key={r.id} data={r} />)
-                                }
-                            </div>
+                        error ? <h3>{error}</h3>
                             :
-                            <div className={styles.recordTable}>
-                                <div className={styles.headT}>
-                                    <p>Имя</p>
-                                    <p>Телефон</p>
-                                    <p>Услуга</p>
-                                    <p>День</p>
-                                    <p>Время</p>
+                            choice === 2 ?
+                                <div className={styles.reviewTable}>
+                                    <div className={styles.headTable}>
+                                        <p>Имя</p>
+                                        <p>Телефон</p>
+                                        <p>Отзыв</p>
+                                    </div>
+                                    {data[choice].map(r => <ReviewAdmin key={r.id} data={r} />)
+                                    }
                                 </div>
-                                {data[choice].map(r => <Record key={r.id} data={r} />)}
-                            </div>
+                                :
+                                <div className={styles.recordTable}>
+                                    <div className={styles.headT}>
+                                        <p>Имя</p>
+                                        <p>Телефон</p>
+                                        <p>Услуга</p>
+                                        <p>День</p>
+                                        <p>Время</p>
+                                    </div>
+                                    {data[choice].map(r => <Record key={r.id} data={r} />)}
+                                </div>
 
-            }
+                }
+            </div>
         </div >
 
     )

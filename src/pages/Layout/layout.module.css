@@ -4,6 +4,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    gap: 10px;
     font-family: cursive;
 }
 
@@ -145,4 +146,249 @@
 .adminBtn:hover {
     transform: scale(1.14);
     filter: brightness(120%);
+}
+
+.burger {
+    display: none;
+}
+
+@media (max-width: 1260px) {
+
+    .navbar ul {
+        gap: 10px;
+    }
+
+    .telIcon {
+        width: 20px;
+    }
+}
+
+@media (max-width: 1040px) {
+    .info {
+        gap: 20px;
+        align-items: center;
+    }
+
+    .navbar .logo {
+        gap: 0;
+    }
+
+    .info .workTime span {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .navbar h1 {
+        /* display: none; */
+        font-size: 16px;
+        width: 140px;
+    }
+}
+
+@media (max-width: 870px) {
+    .navbar ul {
+        display: none;
+    }
+
+    .info .workTime span {
+        display: inline;
+    }
+
+    .info {
+        gap: 10px;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .adminBtn {
+        display: none;
+    }
+
+
+    .burgerBtn {
+        height: 50px;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .burgerBtn p {
+        width: 50px;
+        height: 5px;
+        background: #00A574;
+        border-radius: 5px;
+        position: relative;
+        z-index: 10;
+    }
+
+    .burgerBtn p::before {
+        position: absolute;
+        content: '';
+        width: 50px;
+        height: 5px;
+        border-radius: 5px;
+        background: #00A574;
+        top: -15px;
+        left: 0;
+    }
+
+    .burgerBtn p::after {
+        position: absolute;
+        content: '';
+        width: 50px;
+        height: 5px;
+        border-radius: 5px;
+        background: #00A574;
+        top: 15px;
+        left: 0;
+    }
+
+    .burgerBtn .close {
+        background: transparent;
+    }
+
+    .burgerBtn .close::before {
+        transform: rotate(45deg);
+        top: 0;
+        background: #fff;
+        transition: .2s;
+    }
+
+    .burgerBtn .close::after {
+        top: 0;
+        background: #fff;
+        transform: rotate(-45deg);
+        transition: .2s;
+    }
+
+    .burgerContent {
+        position: absolute;
+        right: 0;
+        width: 70%;
+        top: 0;
+        padding-top: 40px;
+        height: 100vh;
+        background: #00A574;
+        animation: anime .3s ease-in-out;
+    }
+
+    .burgerContent ul {
+        margin-top: 40px;
+        display: block;
+        width: 50%;
+        margin-right: 10px;
+        margin-left: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        /* align-items: end; */
+    }
+
+    .burgerContent .tel {
+        padding-left: 20px;
+    }
+
+    .burgerContent .tel a {
+        color: #fff;
+        font-size: 20px;
+    }
+
+    .burgerContent ul li a {
+        font-size: 24px;
+    }
+
+    .burgerContent ul li .active {
+        font-size: 26px;
+    }
+
+    .burgerContent .adminBtn {
+        display: block;
+        font-size: 24px;
+    }
+
+    .left {
+        width: auto;
+    }
+
+    .navbar .logo {
+        gap: 0;
+    }
+
+    .info .burgerContent .workTime {
+        display: none;
+    }
+}
+
+@media (max-width: 630px) {
+
+    .info .workTime,
+    .info .tel {
+        display: none;
+    }
+
+    .info .burgerContent .workTime,
+    .info .burgerContent .tel {
+        display: block;
+    }
+
+    .workTime {
+        padding-left: 10px;
+        padding-right: 10px;
+        color: #1d1d1d;
+        font-size: 20px;
+        text-align: center;
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 555px) {
+    .burgerContent {
+        width: 85%;
+        animation: anime1 .3s ease-in-out;
+    }
+
+    .burgerContent .workTime span {
+        display: block;
+    }
+}
+
+@media (max-width: 395px) {
+    .burgerContent {
+        width: 100%;
+        animation: anime2 .3s ease-in-out;
+    }
+}
+
+
+@keyframes anime {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 70%;
+    }
+}
+
+@keyframes anime1 {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 85%;
+    }
+}
+
+@keyframes anime2 {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
 }

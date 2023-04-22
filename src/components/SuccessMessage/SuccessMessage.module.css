@@ -55,7 +55,7 @@
     }
 }
 
-.successText {
+.successMessage .successText {
     text-align: center;
     font-weight: 700;
     font-size: 24px;

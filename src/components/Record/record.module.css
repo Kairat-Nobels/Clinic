@@ -17,12 +17,12 @@
     width: 20%;
 }
 
-.record div {
+.record .div {
     display: flex;
     align-items: center;
 }
 
-.record button {
+.record .button {
     margin: 0;
     padding: 10px 30px;
     line-height: 18px;
