@@ -141,7 +141,7 @@ const Modal = ({ setModal, data }) =>
     <div onClick={closeModal} className={styles.window}>
       <form className={styles.card} onSubmit={handleSubmit}>
         <h2>Запись на приём</h2>
-        <div onClick={handleClose} className={styles.closeX}>X</div>
+        <section onClick={handleClose} className={styles.closeX}>X</section>
         {
           result ?
             (loading ? <div className={styles.loading}>
