@@ -6,8 +6,7 @@ import whats from '../../assets/images/whatsApp.png'
 import insta from '../../assets/images/Instagram.png'
 import faceBookicon from '../../assets/images/faceBookicon.png'
 
-function Footer()
-{
+function Footer() {
     return (
         <>
             <nav className={styles.navbar}>
@@ -17,8 +16,8 @@ function Footer()
                 </NavLink>
                 <ul>
                     <li><a target='_blank' href="https://www.facebook.com/"><div><img src={faceBookicon} alt="img" /></div></a></li>
-                    <li><a target='_blank' href="https://www.instagram.com/Sknfxx"><div><img src={insta} alt="img" /></div></a></li>
-                    <li><a target='_blank' href="https://wa.me/996551808551"><div><img src={whats} alt="img" /></div></a></li>
+                    <li><a target='_blank' href="https://www.instagram.com"><div><img src={insta} alt="img" /></div></a></li>
+                    <li><a target='_blank' href="https://wa.me"><div><img src={whats} alt="img" /></div></a></li>
                 </ul>
                 <div className={styles.info}>
                     <div>
