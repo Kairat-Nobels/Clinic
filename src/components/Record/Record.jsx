@@ -2,8 +2,7 @@ import { useState } from "react"
 import DeleteModal from "../DeleteModal/DeleteModal"
 import styles from './record.module.css'
 
-function Record({ data })
-{
+function Record({ data }) {
     const [modal, setModal] = useState(false)
 
     return (
@@ -15,7 +14,7 @@ function Record({ data })
             <p>{data.time}</p>
             <div className={styles.div}><button className={styles.button} onClick={e => setModal(true)}>Удалить</button></div>
             {
-                modal && <DeleteModal setModal={setModal} id={data.id} />
+                modal && <DeleteModal setModal={setModal} id={data.id} type="records" />
             }
         </div>
     )

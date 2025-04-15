@@ -1,51 +1,126 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+import { servicesApi } from "../../api/api";
 
+// GET
 export const getService = createAsyncThunk(
     "getService",
-    async function (info = null, { dispatch, rejectWithValue })
-    {
+    async (_, { rejectWithValue }) => {
         try {
-            const response = await fetch("https://63d78ffe5c4274b136f6a651.mockapi.io/service");
-            if (response.status === 200) {
-                const service = await response.json();
-                return service;
-            }
-            else {
-                throw Error(`Error: ${response.status}`);
-            }
-        }
-        catch (error) {
+            const response = await fetch(servicesApi);
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            return await response.json();
+        } catch (error) {
             return rejectWithValue(error.message);
         }
     }
-)
+);
+
+// CREATE
+export const createService = createAsyncThunk(
+    "createService",
+    async (newService, { rejectWithValue }) => {
+        try {
+            const response = await fetch(servicesApi, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newService),
+            });
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+// UPDATE
+export const updateService = createAsyncThunk(
+    "updateService",
+    async ({ id, updatedData }, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`${servicesApi}/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedData),
+            });
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+// DELETE
+export const deleteService = createAsyncThunk(
+    "deleteService",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`${servicesApi}/${id}`, {
+                method: "DELETE",
+            });
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            return id;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 
 const servicesSlice = createSlice({
-    name: 'servicesSlice',
+    name: "servicesSlice",
     initialState: {
         services: [],
-        doctors: [],
         loading: false,
-        error: null
+        error: null,
     },
-    extraReducers: builder =>
-    {
-        builder.addCase(getService.fulfilled, (state, action) =>
-        {
-            state.loading = false;
-            state.services = action.payload[0];
-            state.doctors = action.payload[1];
-        })
-        builder.addCase(getService.rejected, (state, action) =>
-        {
-            state.error = action.payload;
-            state.loading = false;
-        })
-        builder.addCase(getService.pending, (state, action) =>
-        {
-            state.loading = true;
-        })
-    }
-})
+    extraReducers: builder => {
+        builder
+            // GET
+            .addCase(getService.pending, state => {
+                state.loading = true;
+            })
+            .addCase(getService.fulfilled, (state, action) => {
+                state.loading = false;
+                state.services = action.payload;
+            })
+            .addCase(getService.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                toast.error("Ошибка при загрузке услуг ❌");
+            })
 
-export default servicesSlice.reducer
+            // CREATE
+            .addCase(createService.fulfilled, (state, action) => {
+                state.services.push(action.payload);
+                toast.success("Услуга успешно добавлена");
+            })
+            .addCase(createService.rejected, (state, action) => {
+                toast.error("Ошибка при добавлении услуги");
+            })
+
+            // UPDATE
+            .addCase(updateService.fulfilled, (state, action) => {
+                const index = state.services.findIndex(s => s.id === action.payload.id);
+                if (index !== -1) {
+                    state.services[index] = action.payload;
+                }
+                toast.success("Услуга обновлена");
+            })
+            .addCase(updateService.rejected, (state, action) => {
+                toast.error("Ошибка при обновлении услуги");
+            })
+
+            // DELETE
+            .addCase(deleteService.fulfilled, (state, action) => {
+                state.services = state.services.filter(s => s.id !== action.payload);
+                toast.success("Услуга удалена");
+            })
+            .addCase(deleteService.rejected, (state, action) => {
+                toast.error("Ошибка при удалении услуги");
+            });
+    },
+});
+
+export default servicesSlice.reducer;

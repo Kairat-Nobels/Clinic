@@ -12,23 +12,19 @@ import { useEffect, useState } from 'react'
 import ReviewModal from '../../components/ReviewModal/ReviewModal'
 import Spinner from '../../components/Spinner/Spinner'
 
-function HomePage()
-{
+function HomePage() {
   const [modal, setModal] = useState(false)
   const [more, setMore] = useState(false)
-  const { records } = useSelector(state => state.recordsReducer)
-  const { doctors, loading, error } = useSelector(state => state.servicesReducer)
-  const reviews = records.filter(el => el.type === 2)
+  const { reviews } = useSelector(state => state.reviewsReducer)
+  const { doctors, loading, error } = useSelector(state => state.doctorsReducer)
 
-  const handleSubmit = (e) =>
-  {
+  const handleSubmit = (e) => {
     e.preventDefault()
     alert('Сообщение отправлено')
     e.target.reset()
   }
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
   return (
@@ -59,8 +55,7 @@ function HomePage()
               <p>Если вы ищете место, где вас будут лечить с заботой и профессионализмом, то наш Лечебно оздоровительный центр - это именно то место, которое вы искали. Мы готовы помочь вам достичь и поддерживать оптимальное здоровье, и наша дружелюбная команда с нетерпением ждет вас в нашем центре. Свяжитесь с нами, чтобы узнать больше о наших услугах и сделать запись на прием.</p>
             </>
           }
-          <span onClick={() =>
-          {
+          <span onClick={() => {
             setMore(!more)
           }} className={styles.moreBtn}>{more ? 'Свернуть' : 'Развернуть'}</span>
         </div>

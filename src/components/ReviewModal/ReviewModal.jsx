@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './reviewModal.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { createRecord, getRecords } from '../../redux/slices/recordSlice';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import SuccessMessage from '../SuccessMessage/SuccessMessage';
 import SpinnerModal from '../SpinnerModal/SpinnerModal';
+import { createReview, getReviews } from '../../redux/slices/reviewsSlice';
 
-function ReviewModal({ setModal })
-{
+function ReviewModal({ setModal }) {
     const [result, setResult] = useState(false)
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
@@ -16,20 +15,17 @@ function ReviewModal({ setModal })
 
 
     const dispatch = useDispatch()
-    const { error, loading, success } = useSelector(state => state.recordsReducer)
-    useEffect(() =>
-    {
+    const { error, loading, success } = useSelector(state => state.reviewsReducer)
+    useEffect(() => {
         document.body.style.overflow = 'hidden';
     }, [])
-    const closeModal = (e) =>
-    {
+    const closeModal = (e) => {
         if (!document.querySelector('form').contains(e.target) && !result) {
             document.body.style.overflow = '';
             setModal(false)
         }
     }
-    const handlePhoneNumberChange = (event) =>
-    {
+    const handlePhoneNumberChange = (event) => {
         let input = event.target.value;
         input = input.replace(/\D/g, '');
         if (!/^(2\d{2}|5\d{2}|7\d{2}|9\d{2})\d{6}$/.test(input)) {
@@ -41,20 +37,17 @@ function ReviewModal({ setModal })
         setIsValid(/^\(\d{3}\)-\d{3}-\d{3}$/.test(input));
         setPhone(input);
     };
-    const handleSubmit = (e) =>
-    {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setResult(true)
         const rew = {
-            type: 2,
             name: name,
             phone: phone,
             comment: comment
         }
-        dispatch(createRecord(rew))
+        dispatch(createReview(rew))
     }
-    const handleClose = () =>
-    {
+    const handleClose = () => {
         document.body.style.overflow = '';
         setModal(false)
     }
@@ -71,9 +64,8 @@ function ReviewModal({ setModal })
                             <p>Отзыв отправляется...</p></div>
                             :
                             <div>
-                                <button type='button' className={styles.closeBtn} onClick={() =>
-                                {
-                                    dispatch(getRecords())
+                                <button type='button' className={styles.closeBtn} onClick={() => {
+                                    dispatch(getReviews())
                                     document.body.style.overflow = '';
                                     setModal(false)
                                     setResult(false)

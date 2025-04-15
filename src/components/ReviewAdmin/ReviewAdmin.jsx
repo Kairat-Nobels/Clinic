@@ -1,8 +1,7 @@
 import { useState } from "react"
 import DeleteModal from "../DeleteModal/DeleteModal"
 import styles from './reviewAdmin.module.css'
-function ReviewAdmin({ data })
-{
+function ReviewAdmin({ data }) {
     const [modal, setModal] = useState(false)
 
     return (
@@ -12,7 +11,7 @@ function ReviewAdmin({ data })
             <p className={`${styles.p} ${styles.comment}`}>{data.comment}</p>
             <div><button className={styles.button} onClick={e => setModal(true)}>Удалить</button></div>
             {
-                modal && <DeleteModal setModal={setModal} id={data.id} />
+                modal && <DeleteModal setModal={setModal} id={data.id} type='reviews' />
             }
         </div>
     )

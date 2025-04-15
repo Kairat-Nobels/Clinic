@@ -8,17 +8,15 @@ import ReviewAdmin from '../../components/ReviewAdmin/ReviewAdmin';
 import styles from './adminPage.module.css'
 import { RotatingLines } from 'react-loader-spinner'
 
-function AdminPage()
-{
+function AdminPage() {
     const [choice, setChoice] = useState(0)
     const dispatch = useDispatch()
     const { records, error, loading } = useSelector(state => state.recordsReducer)
+    const { reviews, reviewError = error, reviewLoading = loading } = useSelector(state => state.reviewsReducer)
     const { valid } = useSelector(state => state.adminReducer)
     const navigate = useNavigate()
     const today = new Date()
-    const filteredRecords = records.filter(record =>
-    {
-        if (!record.date) return false;
+    const filteredRecords = records.filter(record => {
         const [day, month] = record.date.split(' ');
         const monthNum = getMonthNumber(month);
         const year = today.getFullYear();
@@ -26,17 +24,14 @@ function AdminPage()
         const recordDate = new Date(year, monthNum, day, hour);
         return recordDate >= today;
     });
-    const review = records.filter(record => record.type === 2)
-    const allRecords = records.filter(record => record.type === 1)
-    function getMonthNumber(monthName)
-    {
+
+    function getMonthNumber(monthName) {
         const monthNames = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
         return monthNames.indexOf(monthName);
     }
 
-    const data = [filteredRecords, allRecords, review]
-    useEffect(() =>
-    {
+    const data = [filteredRecords, records, reviews]
+    useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getRecords())
     }, [])
@@ -57,14 +52,12 @@ function AdminPage()
         'декабря': 11,
     };
 
-    const parseDate = (dateStr) =>
-    {
+    const parseDate = (dateStr) => {
         const [day, month] = dateStr.split(' ');
         const monthIndex = months[month];
         return new Date(new Date().getFullYear(), monthIndex, day);
     };
-    allRecords.sort(function (a, b)
-    {
+    records.sort(function (a, b) {
         // Сравниваем даты
         const dateA = parseDate(a.date);
         const dateB = parseDate(b.date);
@@ -83,8 +76,7 @@ function AdminPage()
             }
         }
     });
-    filteredRecords.sort(function (a, b)
-    {
+    filteredRecords.sort(function (a, b) {
         // Сравниваем даты
         const dateA = parseDate(a.date);
         const dateB = parseDate(b.date);
@@ -106,8 +98,7 @@ function AdminPage()
     if (valid) return (
         <div className='admin container'>
             <div className={styles.head}>
-                <button onClick={() =>
-                {
+                <button onClick={() => {
                     dispatch(outAdmin())
                     navigate('/')
                 }}>Выйти</button>
@@ -120,7 +111,7 @@ function AdminPage()
             </div>
             <div className={styles.tableContainer}>
                 {
-                    loading ? <div className={styles.loading}>
+                    (loading || reviewLoading) ? <div className={styles.loading}>
                         <RotatingLines
                             strokeColor="grey"
                             strokeWidth="5"
@@ -131,7 +122,7 @@ function AdminPage()
                         <p>Загрузка...</p>
                     </div>
                         :
-                        error ? <h3>{error}</h3>
+                        (error || reviewError) ? <h3>{error}</h3>
                             :
                             choice === 2 ?
                                 <div className={styles.reviewTable}>

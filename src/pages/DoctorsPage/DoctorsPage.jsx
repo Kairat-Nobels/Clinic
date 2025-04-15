@@ -6,14 +6,12 @@ import { useEffect } from 'react'
 import Footer from '../../components/Footer/Footer'
 import Spinner from '../../components/Spinner/Spinner'
 
-function DoctorsPage()
-{
+function DoctorsPage() {
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-  const { doctors, loading, error } = useSelector(state => state.servicesReducer)
+  const { doctors, loading, error } = useSelector(state => state.doctorsReducer)
   return (
     <div className={styles.page}>
       <h2>Наши Врачи:</h2>

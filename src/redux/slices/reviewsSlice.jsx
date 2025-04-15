@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { reviewsApi } from "../../api/api";
 import { toast } from "react-toastify";
-import { recordsApi } from "../../api/api";
 
-export const getRecords = createAsyncThunk(
-    "getRecords",
+export const getReviews = createAsyncThunk(
+    "getReviews",
     async function (info = null, { dispatch, rejectWithValue }) {
         try {
-            const response = await fetch(recordsApi);
+            const response = await fetch(reviewsApi);
             if (response.status === 200) {
-                const records = await response.json();
-                return records;
+                const reviews = await response.json();
+                return reviews;
             }
             else {
                 throw Error(`Error: ${response.status}`);
@@ -21,17 +21,17 @@ export const getRecords = createAsyncThunk(
     }
 )
 
-export const createRecord = createAsyncThunk(
-    "createRecord",
-    async function (record = null, { dispatch, rejectWithValue }) {
+export const createReview = createAsyncThunk(
+    "createReview",
+    async function (review = null, { dispatch, rejectWithValue }) {
         try {
-            const res = await fetch(recordsApi, {
+            const res = await fetch(reviewsApi, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(record)
+                body: JSON.stringify(review)
             });
             if (res.status === 201) {
-                return 'Вы успешно записались';
+                return 'Вы успешно оставили отзыв';
             }
             else {
                 throw Error(`Error: ${res.status}`);
@@ -44,11 +44,11 @@ export const createRecord = createAsyncThunk(
     }
 )
 
-export const deleteRecord = createAsyncThunk(
-    'deleteRecord',
+export const deleteReview = createAsyncThunk(
+    'deleteReview',
     async (mockupId, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${recordsApi}/${mockupId}`, {
+            const response = await fetch(`${reviewsApi}/${mockupId}`, {
                 method: 'DELETE'
             });
             if (response.status === 200) {
@@ -62,10 +62,10 @@ export const deleteRecord = createAsyncThunk(
     }
 );
 
-const recordsSlice = createSlice({
-    name: 'recordsSlice',
+const reviewsSlice = createSlice({
+    name: 'reviewsSlice',
     initialState: {
-        records: [],
+        reviews: [],
         loading: false,
         delLoading: false,
         delMessage: null,
@@ -74,43 +74,43 @@ const recordsSlice = createSlice({
         success: null
     },
     extraReducers: builder => {
-        builder.addCase(getRecords.fulfilled, (state, action) => {
+        builder.addCase(getReviews.fulfilled, (state, action) => {
             state.loading = false;
-            state.records = action.payload;
+            state.reviews = action.payload;
         })
-        builder.addCase(getRecords.rejected, (state, action) => {
+        builder.addCase(getReviews.rejected, (state, action) => {
             state.error = action.payload;
             state.loading = false;
         })
-        builder.addCase(getRecords.pending, (state, action) => {
+        builder.addCase(getReviews.pending, (state, action) => {
             state.loading = true;
         })
         // post
-        builder.addCase(createRecord.fulfilled, (state, action) => {
+        builder.addCase(createReview.fulfilled, (state, action) => {
             state.loading = false;
             state.success = action.payload;
         })
-        builder.addCase(createRecord.rejected, (state, action) => {
+        builder.addCase(createReview.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         })
-        builder.addCase(createRecord.pending, (state, action) => {
+        builder.addCase(createReview.pending, (state, action) => {
             state.loading = true;
         })
         // delete
-        builder.addCase(deleteRecord.pending, (state, action) => {
+        builder.addCase(deleteReview.pending, (state, action) => {
             state.delLoading = true;
         })
-        builder.addCase(deleteRecord.fulfilled, (state, action) => {
+        builder.addCase(deleteReview.fulfilled, (state, action) => {
             state.delLoading = false;
-            state.records = state.records.filter(record => record.id !== action.payload);
-            toast.success("Запись успешно удалена");
+            state.reviews = state.reviews.filter(review => review.id !== action.payload);
+            toast.success("Отзыв успешно удален");
         })
-        builder.addCase(deleteRecord.rejected, (state, action) => {
+        builder.addCase(deleteReview.rejected, (state, action) => {
             state.delLoading = false;
             toast.error("Ошибка при удалении");
         })
     }
 })
 
-export default recordsSlice.reducer;
+export default reviewsSlice.reducer;

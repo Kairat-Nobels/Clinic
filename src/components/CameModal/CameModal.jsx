@@ -1,66 +1,52 @@
 import { useEffect, useState } from "react";
 import styles from './cameModal.module.css'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { cameAdmin } from "../../redux/slices/adminSlice";
+import { loginAdmin } from "../../redux/slices/adminSlice";
 
-function CameModal({ setModal })
-{
+function CameModal({ setModal }) {
     const [login, setLogin] = useState('');
-    const [valid, setValid] = useState(null);
-    const [password, setPassword] = useState('')
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    useEffect(() =>
-    {
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
         document.body.style.overflow = 'hidden';
-    }, [])
-    const closeModal = (e) =>
-    {
+        return () => (document.body.style.overflow = '');
+    }, []);
+
+    const closeModal = (e) => {
         if (!document.querySelector('form').contains(e.target)) {
-            document.body.style.overflow = '';
-            setModal(false)
+            setModal(false);
         }
-    }
-    const handleClose = () =>
-    {
-        document.body.style.overflow = '';
-        setModal(false)
-    }
-    const handleSubmit = (e) =>
-    {
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (login === 'admin' && password === 'admin') {
-            document.body.style.overflow = '';
-            dispatch(cameAdmin())
-            navigate('/admin')
-            setModal(false)
-            setValid(null)
+        const res = await dispatch(loginAdmin({ login, password }));
+        if (res.meta.requestStatus === 'fulfilled') {
+            setModal(false);
+            navigate('/admin');
         }
-        else {
-            setValid(true)
-        }
-    }
+    };
+
     return (
         <div onClick={closeModal} className={styles.window}>
-            <form onSubmit={handleSubmit} className={styles.form} action="">
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <h2>Авторизация</h2>
                 <div>
-                    <label>Login: </label>
-                    <input value={login} onChange={e => setLogin(e.target.value)} required type="text" />
+                    <label>Login:</label>
+                    <input value={login} onChange={e => setLogin(e.target.value)} required />
                 </div>
                 <div>
-                    <label>Пароль: </label>
-                    <input value={password} onChange={e => setPassword(e.target.value)} required type="password"></input>
+                    <label>Пароль:</label>
+                    <input value={password} onChange={e => setPassword(e.target.value)} type="password" required />
                 </div>
-                <div onClick={handleClose} className={styles.closeX}>X</div>
-                {
-                    valid && <h3>Неправильный Логин или Пароль</h3>
-                }
-                <button type='submit'>Отправить</button>
-            </form >
-        </div >
-    )
+                <div onClick={() => setModal(false)} className={styles.closeX}>X</div>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    );
 }
 
-export default CameModal
+export default CameModal;

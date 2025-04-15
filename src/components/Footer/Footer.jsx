@@ -17,8 +17,8 @@ function Footer()
                 </NavLink>
                 <ul>
                     <li><a target='_blank' href="https://www.facebook.com/"><div><img src={faceBookicon} alt="img" /></div></a></li>
-                    <li><a target='_blank' href="https://www.instagram.com/"><div><img src={insta} alt="img" /></div></a></li>
-                    <li><a target='_blank' href="https://api.whatsapp.com/"><div><img src={whats} alt="img" /></div></a></li>
+                    <li><a target='_blank' href="https://www.instagram.com/Sknfxx"><div><img src={insta} alt="img" /></div></a></li>
+                    <li><a target='_blank' href="https://wa.me/996551808551"><div><img src={whats} alt="img" /></div></a></li>
                 </ul>
                 <div className={styles.info}>
                     <div>
